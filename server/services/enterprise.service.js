@@ -38,8 +38,8 @@ export async function putInfoTransaction(
       session
     );
 
-    // Enterprise 도큐먼트에 저장 - adminId, enterpriseId, enterpriseName
-    await putEnterpriseInfo(adminId, enterpriseId, enterpriseName, session);
+    // Enterprise 도큐먼트에 저장 - enterpriseId, enterpriseName
+    await putEnterpriseInfo(enterpriseId, enterpriseName, session);
 
     await session.commitTransaction();
     session.endSession();
@@ -52,15 +52,19 @@ export async function putInfoTransaction(
       adminId,
     });
 
-    const data = {
-      adminId: adminData.adminId,
-      adminPhoneNumber: adminData.adminPhoneNumber,
-      businessNumber: adminData.businessNumber,
-      consoleInfo: adminData.consoleInfo,
-      enterpriseId: enterpriseData.enterpriseId,
-      enterpriseName: enterpriseData.enterpriseName,
-    };
-    return data;
+    if (!adminData) {
+      return;
+    } else {
+      const data = {
+        adminId: adminData.adminId,
+        adminPhoneNumber: adminData.adminPhoneNumber,
+        businessNumber: adminData.businessNumber,
+        consoleInfo: adminData.consoleInfo,
+        enterpriseId: enterpriseData.enterpriseId,
+        enterpriseName: enterpriseData.enterpriseName,
+      };
+      return data;
+    }
   } catch (err) {
     console.error(err, 'Transaction error at createAdmin');
     await session.abortTransaction();
@@ -84,34 +88,32 @@ async function putAdminInfo(
     // crypto를 이용한 비밀번호 암호화 (with sha256)
     const hashedPassword = createHashedPassword(adminPassword);
 
-    return await Admin.create(
-      [
-        {
-          adminId,
-          adminPassword: hashedPassword,
-          adminPhoneNumber,
-          businessNumber,
-          consoleInfo: `https://hybrixops.ip/${enterpriseId}`,
-        },
-      ],
-      { session }
-    );
+    if (!(adminPassword || adminPhoneNumber || businessNumber)) {
+      return;
+    } else {
+      return await Admin.create(
+        [
+          {
+            adminId,
+            adminPassword: hashedPassword,
+            adminPhoneNumber,
+            businessNumber,
+            consoleInfo: `https://hybrixops.ip/${enterpriseId}`,
+          },
+        ],
+        { session }
+      );
+    }
   } catch (err) {
     console.error(err);
   }
 }
 
-async function putEnterpriseInfo(
-  adminId,
-  enterpriseId,
-  enterpriseName,
-  session
-) {
+export async function putEnterpriseInfo(enterpriseId, enterpriseName, session) {
   try {
     return await Enterprise.create(
       [
         {
-          adminId,
           enterpriseId,
           enterpriseName,
         },
