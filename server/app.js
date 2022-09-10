@@ -3,7 +3,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import { config } from './config/config.js';
-import { dbConnect } from './config/dbConfig.js';
+import { dbConnected } from './db/database.js';
+import enterpriseRouter from './routes/enterprise.route.js';
 
 const app = express();
 
@@ -13,11 +14,8 @@ app.use(helmet());
 app.use(morgan('tiny'));
 
 // app.use('/users');
-// app.use('/enterprises');
+app.use('/enterprises', enterpriseRouter);
 // app.use('/services');
-app.use('/', (req, res, next) => {
-  res.send('API Server!!');
-});
 
 app.use((req, res, next) => {
   res.sendStatus(404);
@@ -32,5 +30,5 @@ const port = config.port || 4000;
 
 app.listen(port, () => {
   console.log(`🚀 SERVER started at ${port}`);
-  dbConnect();
+  dbConnected();
 });
