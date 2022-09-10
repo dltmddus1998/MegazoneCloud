@@ -29,23 +29,21 @@ export async function createAdmin(req, res, next) {
 
     // adminId를 이용하여 User Document에서 해당 담당자 정보 가져오기
 
-    if (!(adminId || adminPhoneNumber || adminPassword)) {
+    if (!(adminPhoneNumber || adminPassword)) {
       await enterpriseService.putEnterpriseInfo(
+        adminId,
         enterpriseId,
         enterpriseName,
         null
       );
 
-      const enterpriseData = await Enterprise.findOne({ enterpriseId });
-
       return res.status(200).json({
         message: 'Information of Enterprise is successfully created!!',
-        enterpriseData,
       });
     } else {
       const adminInfo = await enterpriseService.getAdminInfoFromUsers(adminId);
 
-      const transactionData = await enterpriseService.putInfoTransaction(
+      await enterpriseService.putInfoTransaction(
         enterpriseId,
         enterpriseName,
         businessNumber,
@@ -54,14 +52,16 @@ export async function createAdmin(req, res, next) {
         adminPassword
       );
 
-      const { email, name } = adminInfo;
-      const data = { ...transactionData, email, name };
-
-      return res.status(200).json({
-        message:
-          'Information of Enterprise and Admin is successfully created!!',
-        data,
-      });
+      if (!adminInfo) {
+        return res.status(404).json({
+          message: 'There is no data you are finding',
+        });
+      } else {
+        return res.status(200).json({
+          message:
+            'Information of Enterprise and Admin is successfully created!!',
+        });
+      }
     }
   } catch (err) {
     console.error(err);
@@ -74,6 +74,7 @@ export async function getAdmin(req, res, next) {
    * URI: /enterprises/info
    * 1. 이메일, 회사이름, 회사아이디, 사업자 번호, 담당자 이름, 담당자 연락처, (담당자 이메일), 콘솔 정보, 콘솔 상태, admin 패스워드 조회
    * 2. Admin, Enterprise 도큐먼트에서 조회 가능
+   * 3. Enterprise
    */
 }
 

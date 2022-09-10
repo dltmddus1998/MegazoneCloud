@@ -39,32 +39,12 @@ export async function putInfoTransaction(
     );
 
     // Enterprise 도큐먼트에 저장 - enterpriseId, enterpriseName
-    await putEnterpriseInfo(enterpriseId, enterpriseName, session);
+    await putEnterpriseInfo(adminId, enterpriseId, enterpriseName, session);
 
     await session.commitTransaction();
     session.endSession();
 
     console.log('Transaction success at createAdmin');
-    const adminData = await Admin.findOne({
-      adminId,
-    });
-    const enterpriseData = await Enterprise.findOne({
-      adminId,
-    });
-
-    if (!adminData) {
-      return;
-    } else {
-      const data = {
-        adminId: adminData.adminId,
-        adminPhoneNumber: adminData.adminPhoneNumber,
-        businessNumber: adminData.businessNumber,
-        consoleInfo: adminData.consoleInfo,
-        enterpriseId: enterpriseData.enterpriseId,
-        enterpriseName: enterpriseData.enterpriseName,
-      };
-      return data;
-    }
   } catch (err) {
     console.error(err, 'Transaction error at createAdmin');
     await session.abortTransaction();
@@ -109,11 +89,17 @@ async function putAdminInfo(
   }
 }
 
-export async function putEnterpriseInfo(enterpriseId, enterpriseName, session) {
+export async function putEnterpriseInfo(
+  adminId,
+  enterpriseId,
+  enterpriseName,
+  session
+) {
   try {
     return await Enterprise.create(
       [
         {
+          adminId,
           enterpriseId,
           enterpriseName,
         },
