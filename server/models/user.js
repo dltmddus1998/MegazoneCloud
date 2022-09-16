@@ -29,15 +29,15 @@ const newSchema = mongoose.Schema({
   },
   quitDate: {
     type: Date,
-    required: false,
+    required: new Date(),
   },
 });
 
 export const User = mongoose.model('User', newSchema);
 
+// 임의의 가입자 생성
 User.find().then(async (user) => {
   if (user.length === 0) {
-    console.log('here!!!');
     await User.create([
       {
         _id: new mongoose.Types.ObjectId(),
