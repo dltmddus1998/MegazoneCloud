@@ -1,6 +1,12 @@
 # MegazoneCloud
 메가존 클라우드 과제
 
+# 실행 방법
+
+#### server >> `npm install` 이후 아래 Notion 링크에서 `.env`파일 참고하여 생성한 후 `npm run start` 실행
+
+#### client >> `npm install` 이후 `npm run serve` 실행 후 `http://localhost:8080/` 실행
+
 # 🧐 과제 분석
 
 ## 🔖 과제 의도
