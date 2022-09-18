@@ -1,6 +1,8 @@
 'use strict';
 import mongoose from 'mongoose';
 
+const now = new Date();
+
 const newSchema = mongoose.Schema({
   enterpriseId: {
     type: String,
@@ -24,3 +26,11 @@ const newSchema = mongoose.Schema({
 });
 
 export const UserService = mongoose.model('UserService', newSchema);
+
+// UserService.find().then(async userService => {
+//   await UserService.create([
+//     {
+//         enterpriseId:
+//     }
+//   ])
+// })

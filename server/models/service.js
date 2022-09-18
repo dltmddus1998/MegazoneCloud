@@ -2,8 +2,9 @@
 import mongoose from 'mongoose';
 
 const newSchema = mongoose.Schema({
-  _id: {
-    type: mongoose.Schema.Types.ObjectId,
+  serviceId: {
+    type: Number,
+    required: true,
   },
   serviceName: {
     type: String,
@@ -21,27 +22,27 @@ Service.find().then(async (service) => {
   if (service.length === 0) {
     await Service.create([
       {
-        _id: new mongoose.Types.ObjectId(),
+        serviceId: 1,
         serviceName: 'Service5',
         deductedCoin: -500,
       },
       {
-        _id: new mongoose.Types.ObjectId(),
+        serviceId: 2,
         serviceName: 'Service4',
         deductedCoin: -400,
       },
       {
-        _id: new mongoose.Types.ObjectId(),
+        serviceId: 3,
         serviceName: 'Service3',
         deductedCoin: -300,
       },
       {
-        _id: new mongoose.Types.ObjectId(),
+        serviceId: 4,
         serviceName: 'Service2',
         deductedCoin: -200,
       },
       {
-        _id: new mongoose.Types.ObjectId(),
+        serviceId: 5,
         serviceName: 'Service1',
         deductedCoin: -100,
       },

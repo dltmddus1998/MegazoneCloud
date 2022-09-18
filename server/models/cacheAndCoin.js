@@ -39,7 +39,7 @@ const newSchema = mongoose.Schema({
     required: true,
   },
   serviceId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Number,
     required: true,
     ref: 'Service',
   },
@@ -54,3 +54,24 @@ const newSchema = mongoose.Schema({
 });
 
 export const CacheAndCoin = mongoose.model('CacheAndCoin', newSchema);
+
+CacheAndCoin.find().then(async (cacheAndCoin) => {
+  if (cacheAndCoin.length === 0) {
+    await CacheAndCoin.create([
+      {
+        enterpriseId: new mongoose.Types.ObjectId(),
+        coin: 1000,
+        cache: 700,
+        bonus: 300,
+        lastRenewalDate: new Date(),
+        cacheChargedDate: new Date(),
+        bonusChargedDate: new Date(),
+        chargedCache: 300,
+        chargedBonus: 500,
+        serviceId: 5,
+        deductedDate: new Date(),
+        deductedResult: true,
+      },
+    ]);
+  }
+});

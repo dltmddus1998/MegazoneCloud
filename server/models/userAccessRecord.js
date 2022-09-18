@@ -2,9 +2,27 @@
 import mongoose from 'mongoose';
 
 const newSchema = mongoose.Schema({
-  adminId: {
-    type: mongoose.Schema.Types.ObjectId,
+  // adminId: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User',
+  //   required: true,
+  // },
+  adminEmail: {
+    type: String,
     ref: 'User',
+    required: true,
+  },
+  adminName: {
+    type: String,
+    required: true,
+  },
+  enterpriseName: {
+    type: String,
+    required: true,
+  },
+  enterpriseId: {
+    type: String,
+    ref: 'Enterprise',
     required: true,
   },
   lastLoginDate: {
@@ -20,3 +38,5 @@ const newSchema = mongoose.Schema({
     required: true,
   },
 });
+
+export const UserAccessRecord = mongoose.model('UserAccessRecord', newSchema);

@@ -1,5 +1,6 @@
 'use strict';
 import mongoose from 'mongoose';
+import crypto from 'crypto';
 
 const newSchema = mongoose.Schema({
   email: {
@@ -44,10 +45,35 @@ const newSchema = mongoose.Schema({
 
 export const Enterprise = mongoose.model('Enterprise', newSchema);
 
-// Enterprise.find().then(async enterprise => {
-//   if (enterprise.length === 0) {
-//     await Enterprise.create([
+function createHashedPassword(password) {
+  return crypto.createHash('sha256').update(password).digest('base64');
+}
 
-//     ])
-//   }
-// })
+Enterprise.find().then(async (enterprise) => {
+  if (enterprise.length === 0) {
+    await Enterprise.create([
+      {
+        email: 'abc123@gmail.com',
+        adminName: 'test1',
+        adminEmail: 'abc123@gmail.com',
+        adminPassword: createHashedPassword('kvneilxol10'),
+        adminPhoneNumber: '010-1234-5678',
+        businessNumber: '124-23443',
+        consoleInfo: 'enable',
+        enterpriseId: 'samsungelec',
+        enterpriseName: 'samsung',
+      },
+      {
+        email: 'oxk096@naver.com',
+        adminName: 'test4',
+        adminEmail: 'oxk096@naver.com',
+        adminPassword: createHashedPassword('sfwkkl134'),
+        adminPhoneNumber: '010-9183-1111',
+        businessNumber: '987-01293',
+        consoleInfo: 'enable',
+        enterpriseId: 'lgelec',
+        enterpriseName: 'lg',
+      },
+    ]);
+  }
+});
