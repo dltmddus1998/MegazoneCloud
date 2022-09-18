@@ -1,5 +1,5 @@
 import { User } from '../models/user.js';
-import { Admin } from '../models/admin.js';
+import { Enterprise } from '../models/enterprise.js';
 import mongoose from 'mongoose';
 
 export async function updateUserInfo(userId, email, name, photo) {
