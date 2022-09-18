@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import { config } from './config/config.js';
 import { dbConnected } from './db/database.js';
 import enterpriseRouter from './routes/enterprise.route.js';
+import adminRouter from './routes/admin.route.js';
 
 const app = express();
 
@@ -13,9 +14,8 @@ app.use(cors(config.cors));
 app.use(helmet());
 app.use(morgan('tiny'));
 
-// app.use('/users');
+app.use('/users', adminRouter);
 app.use('/enterprises', enterpriseRouter);
-// app.use('/services');
 
 app.use((req, res, next) => {
   res.sendStatus(404);
