@@ -1,16 +1,17 @@
 import express from 'express';
-// import 'express-async-errors';
-// import { body } from 'express-validator';
+import 'express-async-errors';
 import * as enterpriseController from '../controllers/enterprise.controller.js';
 
 const router = express.Router();
 
-router.post('/', enterpriseController.createAdmin);
+router.get('/enterpriseInfo', enterpriseController.getEnterpriseInfoList);
 
-router.get('/info', enterpriseController.getAdmin);
+router.get('/coinAndCacheInfo', enterpriseController.getCoinAndCacheInfo);
 
-router.put('/info/:enterpriseId', enterpriseController.updateAdmin);
+router.get('/serviceInfo', enterpriseController.getServiceInfo);
 
-router.delete('/info', enterpriseController.deleteAdmin);
+router.get('/userServiceInfo', enterpriseController.getUserServiceInfo);
+
+router.get('/accessRecord', enterpriseController.getAccessRecord);
 
 export default router;
