@@ -15,8 +15,7 @@ app.use(helmet());
 app.use(morgan('tiny'));
 
 app.use('/users', adminRouter);
-// app.use('/enterprises', enterpriseRouter);
-// app.use('/services');
+app.use('/enterprises', enterpriseRouter);
 
 app.use((req, res, next) => {
   res.sendStatus(404);
