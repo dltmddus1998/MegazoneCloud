@@ -1,6 +1,8 @@
 import { User } from '../models/user.js';
-import { Enterprise } from '../models/enterprise.js';
-import mongoose from 'mongoose';
+
+export async function getUserInfo() {
+  return await User.find({}, { _id: 0 });
+}
 
 export async function updateUserInfo(userId, email, name, photo) {
   return User.findOne({

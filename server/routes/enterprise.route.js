@@ -12,6 +12,13 @@ router.get('/serviceInfo', enterpriseController.getServiceInfo);
 
 router.get('/userServiceInfo', enterpriseController.getUserServiceInfo);
 
-router.get('/accessRecord', enterpriseController.getAccessRecord);
+router.get('/socialAccessRecord', enterpriseController.getSocialAccessRecord);
+
+router.get('/socialAccessRecord', enterpriseController.getSocialAccessRecord);
+
+router.get(
+  '/enterpriseAccessRecord',
+  enterpriseController.getEnterpriseAccessRecord
+);
 
 export default router;

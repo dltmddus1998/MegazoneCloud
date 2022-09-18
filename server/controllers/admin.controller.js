@@ -1,5 +1,16 @@
 import * as adminService from '../services/admin.service.js';
 
+export async function getUserInfo(req, res, next) {
+  try {
+    const userInfo = await adminService.getUserInfo();
+    return res.status(200).json({
+      userInfo,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export async function updateUserInfo(req, res, next) {
   try {
     const { userId } = req.params;

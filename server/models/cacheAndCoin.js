@@ -59,7 +59,7 @@ CacheAndCoin.find().then(async (cacheAndCoin) => {
   if (cacheAndCoin.length === 0) {
     await CacheAndCoin.create([
       {
-        enterpriseId: new mongoose.Types.ObjectId(),
+        enterpriseId: 'samsunglec',
         coin: 1000,
         cache: 700,
         bonus: 300,

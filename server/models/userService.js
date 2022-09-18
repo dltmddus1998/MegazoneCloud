@@ -8,9 +8,8 @@ const newSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  serviceId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Service',
+  serviceName: {
+    type: String,
     required: true,
   },
   monthlyFeeStartDate: {
@@ -27,10 +26,17 @@ const newSchema = mongoose.Schema({
 
 export const UserService = mongoose.model('UserService', newSchema);
 
-// UserService.find().then(async userService => {
-//   await UserService.create([
-//     {
-//         enterpriseId:
-//     }
-//   ])
-// })
+UserService.find().then(async (userService) => {
+  if (userService.length === 0) {
+    await UserService.create([
+      {
+        enterpriseId: 'samsunglec',
+        serviceName: 'Service5',
+      },
+      {
+        enterpriseId: 'samsunglec',
+        serviceName: 'Service4',
+      },
+    ]);
+  }
+});

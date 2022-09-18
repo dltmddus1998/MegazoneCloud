@@ -2,11 +2,6 @@
 import mongoose from 'mongoose';
 
 const newSchema = mongoose.Schema({
-  // adminId: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'User',
-  //   required: true,
-  // },
   adminEmail: {
     type: String,
     ref: 'User',
@@ -40,3 +35,28 @@ const newSchema = mongoose.Schema({
 });
 
 export const UserAccessRecord = mongoose.model('UserAccessRecord', newSchema);
+
+UserAccessRecord.find().then(async (userAccessRecord) => {
+  if (userAccessRecord.length === 0) {
+    await UserAccessRecord.create([
+      {
+        adminEmail: 'abc123@gmail.com',
+        adminName: 'updatedTest1',
+        enterpriseName: 'samsung',
+        enterpriseId: 'samsunglec',
+        lastLoginDate: '2022-09-12 12:01',
+        lastLoginIP: '211.1.3.2',
+        lastLoginGEO: 'S.Korea',
+      },
+      {
+        adminEmail: 'oxk096@naver.com',
+        adminName: 'test4',
+        enterpriseName: 'lg',
+        enterpriseId: 'lglec',
+        lastLoginDate: '2022-09-15 08:01',
+        lastLoginIP: '201.1.13.2',
+        lastLoginGEO: 'S.Korea',
+      },
+    ]);
+  }
+});

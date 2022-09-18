@@ -48,10 +48,10 @@ export async function getUserServiceInfo(req, res, next) {
   }
 }
 
-export async function getAccessRecord(req, res, next) {
-  // 접근 이력 조회
+export async function getSocialAccessRecord(req, res, next) {
+  // 사용자 접근 이력 조회
   try {
-    const userAccessRecord = await enterpriseService.getUserAccessRecord();
+    const userAccessRecord = await enterpriseService.getSocialAccessRecord();
     return res.status(200).json({
       userAccessRecord,
     });
@@ -60,4 +60,15 @@ export async function getAccessRecord(req, res, next) {
   }
 }
 
-// export async function getEnterpriseAccessRecord(req, res, next) {}
+export async function getEnterpriseAccessRecord(req, res, next) {
+  // 회사 접근 이력 조회
+  try {
+    const enterpriseAccessRecord =
+      await enterpriseService.getEnterpriseAccessRecord();
+    return res.status(200).json({
+      enterpriseAccessRecord,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+}
