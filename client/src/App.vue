@@ -1,47 +1,47 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  <div id="app">
+    <nav>
+      <router-link to="/">Social 가입자 관리</router-link>
+      <br />
+      <br />
+      <router-link to="/usersList">가입자 관리</router-link>
+      <br />
+      <br />
+      <router-link to="/cacheAndCoinList">충전 및 지출 관리</router-link>
+      <br />
+      <br />
+      <router-link to="/serviceList">서비스 가격정책</router-link>
+      <br />
+      <br />
+      <router-link to="/usersService">가입자 서비스 이력</router-link>
+      <br />
+      <br />
+      <router-link to="/usersAccessHistory">접근 이력</router-link>
+    </nav>
+    <router-view />
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+nav {
+  padding: 30px;
+  text-align: left;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>
