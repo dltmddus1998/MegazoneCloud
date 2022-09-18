@@ -3,9 +3,9 @@
 
 # 실행 방법
 
-#### server >> `npm install` 이후 아래 Notion 링크에서 `.env`파일 참고하여 생성한 후 `npm run start` 실행
+#### server ➡️ `npm install` 이후 아래 Notion 링크에서 `.env`파일 참고하여 생성한 후 `npm run start` 실행
 
-#### client >> `npm install` 이후 `npm run serve` 실행 후 `http://localhost:8080/` 실행
+#### client ➡️ `npm install` 이후 `npm run serve` 실행 후 `http://localhost:8080/` 실행
 
 # 🧐 과제 분석
 
@@ -34,13 +34,11 @@
 
 </aside>
 
-✔︎ **소셜로그인 →** 이메일, 이름, 사진 정보를 DB에 저장
+✔︎ 가입자 리스트 **→** 이메일, 이름, 사진 정보를 DB에 저장 (Create 메서드로 임의의 데이터 생성)
 
-✔︎ 더미 데이터를 몇개 넣어두고 시작
+✔︎ 백엔드 → Update, Delete 구현
 
 ### 🛎 가입자 관리
-
-✔︎ gmail, naver, kakao 중 소셜로그인 구현
 
 ✔︎ 소셜 로그인한 유저가 회사 정보 입력하는 부분
 
@@ -70,13 +68,10 @@
 
 ## 🛣 REST API
 
-<aside>
-💡 **소셜 로그인 부분 제외 모두 조회 부분만 구현한다.**
-
-</aside>
-
 | Representation | Verb | URI |
 | --- | --- | --- |
+| 가입자 수정 | PUT | /api/users/:userId |
+| 가입자 삭제 | PATCH | /api/users/:userId|
 | 회사 & 담당자 전체 조회 | GET | /api/enterprises/enterpriseInfo |
 | 가입자 전체 조회 | GET | /api/users/info |
 | 회사 충전 및 지출 이력 조회 | GET | /api/enterprises/coinAndCacheInfo |
@@ -200,4 +195,4 @@
 
 # Notion Link
 
-## [Notion](https://vaulted-occupation-087.notion.site/bc81aa96441144eb8124fbde569e36b0)
+#### [Notion](https://vaulted-occupation-087.notion.site/bc81aa96441144eb8124fbde569e36b0)
