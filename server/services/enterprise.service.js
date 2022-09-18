@@ -1,112 +1,29 @@
-import { User } from '../models/user.js';
-import { Admin } from '../models/admin.js';
 import { Enterprise } from '../models/enterprise.js';
-import mongoose from 'mongoose';
-import crypto from 'crypto';
+import { CacheAndCoin } from '../models/cacheAndCoin.js';
+import { Service } from '../models/service.js';
+import { UserService } from '../models/userService.js';
+import { UserAccessRecord } from '../models/userAccessRecord.js';
 
-export async function getAdminInfoFromUsers(adminId) {
-  try {
-    const admin = await User.findOne({
-      _id: adminId,
-    });
-
-    return admin;
-  } catch (err) {
-    console.error(err);
-  }
+export async function getEnterpriseInfoList() {
+  return await Enterprise.find();
 }
 
-export async function putInfoTransaction(
-  enterpriseId,
-  enterpriseName,
-  businessNumber,
-  adminId,
-  adminPhoneNumber,
-  adminPassword
-) {
-  const session = await mongoose.startSession();
-  try {
-    session.startTransaction(); // 트랜잭션 시작
-
-    // Admin 도큐먼트에 저장 - adminId, adminPassword (sha256 암호화 적용), adminPhoneNumber, businessNumber, consoleInfo = https://hybrixops.ip/<enterpriseId>
-    await putAdminInfo(
-      adminId,
-      adminPassword,
-      adminPhoneNumber,
-      businessNumber,
-      enterpriseId,
-      session
-    );
-
-    // Enterprise 도큐먼트에 저장 - enterpriseId, enterpriseName
-    await putEnterpriseInfo(adminId, enterpriseId, enterpriseName, session);
-
-    await session.commitTransaction();
-    session.endSession();
-
-    console.log('Transaction success at createAdmin');
-  } catch (err) {
-    console.error(err, 'Transaction error at createAdmin');
-    await session.abortTransaction();
-    session.endSession();
-  }
+export async function getCoinAndCacheInfo() {
+  return await CacheAndCoin.find();
 }
 
-function createHashedPassword(password) {
-  return crypto.createHash('sha256').update(password).digest('base64');
+export async function getServiceInfo() {
+  return await Service.find();
 }
 
-async function putAdminInfo(
-  adminId,
-  adminPassword,
-  adminPhoneNumber,
-  businessNumber,
-  enterpriseId,
-  session
-) {
-  try {
-    // crypto를 이용한 비밀번호 암호화 (with sha256)
-    const hashedPassword = createHashedPassword(adminPassword);
-
-    if (!(adminPassword || adminPhoneNumber || businessNumber)) {
-      return;
-    } else {
-      return await Admin.create(
-        [
-          {
-            adminId,
-            adminPassword: hashedPassword,
-            adminPhoneNumber,
-            businessNumber,
-            consoleInfo: `https://hybrixops.ip/${enterpriseId}`,
-          },
-        ],
-        { session }
-      );
-    }
-  } catch (err) {
-    console.error(err);
-  }
+export async function getUserServiceInfo() {
+  return await UserService.find();
 }
 
-export async function putEnterpriseInfo(
-  adminId,
-  enterpriseId,
-  enterpriseName,
-  session
-) {
-  try {
-    return await Enterprise.create(
-      [
-        {
-          adminId,
-          enterpriseId,
-          enterpriseName,
-        },
-      ],
-      { session }
-    );
-  } catch (err) {
-    console.error(err);
-  }
+export async function getAccessRecord() {
+  return await UserAccessRecord.find();
 }
+
+// export async function getEnterpriseAccessRecord() {
+//   return await UserAccessRecord.find({}, { adminId: false });
+// }
