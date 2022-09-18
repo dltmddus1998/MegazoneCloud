@@ -5,25 +5,31 @@ import { UserService } from '../models/userService.js';
 import { UserAccessRecord } from '../models/userAccessRecord.js';
 
 export async function getEnterpriseInfoList() {
-  return await Enterprise.find();
+  return await Enterprise.find({}, { _id: 0, __v: 0 });
 }
 
 export async function getCoinAndCacheInfo() {
-  return await CacheAndCoin.find();
+  return await CacheAndCoin.find({}, { _id: 0, __v: 0 });
 }
 
 export async function getServiceInfo() {
-  return await Service.find();
+  return await Service.find({}, { __v: 0, _id: 0, serviceId: 0 });
 }
 
 export async function getUserServiceInfo() {
-  return await UserService.find();
+  return await UserService.find({}, { _id: 0 });
 }
 
-export async function getAccessRecord() {
-  return await UserAccessRecord.find();
+export async function getSocialAccessRecord() {
+  return await UserAccessRecord.find(
+    {},
+    { _id: 0, __v: 0, enterpriseName: 0, enterpriseId: 0 }
+  );
 }
 
-// export async function getEnterpriseAccessRecord() {
-//   return await UserAccessRecord.find({}, { adminId: false });
-// }
+export async function getEnterpriseAccessRecord() {
+  return await UserAccessRecord.find(
+    {},
+    { _id: 0, __v: 0, adminEmail: 0, adminName: 0 }
+  );
+}
